@@ -1,0 +1,58 @@
+<h1 class="welcome">Tables</h1>
+
+<br>
+<br>
+
+<i>Pense bête : Veuillez bien mettre l'endpoint de l'API dans la classe './app/controllers/tables'</i>
+
+<br>
+<br>
+{{#if this.api_endpoint}}
+  {{#if this.is_load}}
+    Cliquez ici pour vérifier l'existence de toutes les tables :
+    <button type="button" class="btn btn-warning" {{on "click" this.checkTablesButton}}>
+      Check
+    </button>
+    <br/>
+    <br/>
+    Cliquez ici pour mettre à jour la base de données avec le nouveau schéma :
+    <button type="button" class="btn btn-warning" {{on "click" this.updateDatabase}}>
+      Update
+    </button>
+    <br/>
+    <br/>
+    {{#if this.tables_exist}}
+      Cliquez ici pour remplir chaque table avec 5 données générées :
+      <button type="button" class="btn btn-warning" {{on "click" this.fillTables}}>
+        Create fakes data
+      </button>
+      <br/>
+      <br/>
+      Cliquez ici pour supprimer les données des tables de la base de données :
+      <button type="button" class="btn btn-danger" {{on "click" this.cleanTables}}>
+        Clean tables
+      </button>
+
+      <br/>
+      <br/>
+      Cliquez ici pour supprimer les tables de la base de données :
+      <button type="button" class="btn btn-danger" {{on "click" this.dropTables}}>
+        Drop tables
+      </button>
+    {{else}}
+      Cliquez ici pour créer les tables de la base de données :
+      <button type="button" class="btn btn-success" {{on "click" this.createTables}}>
+        Create tables
+      </button>
+
+    {{/if}}
+  {{else}}
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  {{/if}}
+{{else}}
+
+  Si vous voyez ce message vous n'avez pas mis l'endpoint de l'API.
+
+{{/if}}

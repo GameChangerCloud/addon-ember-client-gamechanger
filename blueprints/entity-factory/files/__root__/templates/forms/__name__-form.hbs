@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="title">New <%=entityName%></h1>
+</div>
+
+{{#validated-form
+  model = (changeset model <%=upperFirstLetter%>Validations)
+  on-submit =  (action 'submit' f.input)
+  as |f|}}
+
+
+  <%=listColumnsTable%>
+
+
+{{f.submit class="btn btn-success valid-form" label="Save"}}
+
+{{/validated-form}}
