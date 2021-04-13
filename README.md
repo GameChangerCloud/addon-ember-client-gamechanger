@@ -1,7 +1,8 @@
 # addon-ember-client-gamechanger
 
+Set of [Ember](https://emberjs.com/) blueprints for scaffolding the client part of an application from a GraphQL file. 
 
-Generator based on [Yeoman](https://yeoman.io/) in a [Ember](https://emberjs.com/) project based on a graphQL schema.
+As all Ember addon, it is based on [Yeoman](https://yeoman.io/) and associated technologies (including [EJS](https://ejs.co/))
 
 ## Requirement
 
@@ -18,7 +19,28 @@ npm install -g ember
 - An AWS Account set up and configured on your machine ( best if you use the [aws-cli](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) to configure with `aws configure` command)
 - A Cognito User group set up (see [AWS Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-as-user-directory.html))
 
-## Installation
+## Usage for application scaffolding and development
+### Application scaffolding
+
+Go to the directory where you want to generate your application
+```
+ember new <project-name> --no-welcome
+cd <project-name>
+ember install ember-client-gamechanger
+npm install
+ember g graphql-import <graphql-file>
+```
+
+Just answer 'no' to all questions. 
+
+### Application development
+
+When starting the application, the developer can rely on 3 modes:
+* Mirage setup: this is the default mode whne using 'ember s' command. 
+* GraphQL proxy setup: 
+* Production setup:
+
+## Installation for modifying the addon
 ### Locally
 Get the project and install its dependencies
 ```
