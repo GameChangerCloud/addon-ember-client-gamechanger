@@ -1,0 +1,14 @@
+type User {
+    id: ID!
+    username: String!
+    email: String!
+}
+
+type Post {
+    id: ID!
+    author: User
+}
+
+type Blog {
+    id: ID!
+}

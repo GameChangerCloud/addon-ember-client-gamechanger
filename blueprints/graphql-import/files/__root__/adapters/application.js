@@ -1,12 +1,12 @@
 import Adapter from '@ember-data/adapter';
 import GraphQLAdapter from 'ember-graphql-adapter';
 import ENV from '<%=appName%>/config/environment';
-import Constantes from '../constantes'
+import Params from '../params'
 import { inject as service } from '@ember/service';
 
 export default class ApplicationAdapter extends GraphQLAdapter {
   @service session
-  endpoint = Constantes.getApi()
+  endpoint = Params.getApi()
   dataType = 'json'
   httpMethod = 'POST'
   headers = {

@@ -1,0 +1,55 @@
+type Tweet {
+    id: ID!
+    # The tweet text. No more than 140 characters!
+    body: String
+    # When the tweet was published
+    date: DateTime!
+    # Who published the tweet
+    author: User
+    # Views, retweets, likes, etc
+    stats: Stat
+}
+
+scalar DateTime
+
+
+type User {
+    id: ID!
+    username: String
+    firstname: String
+    lastname: String
+    fullname: String
+    name: String @deprecated
+}
+
+type Stat {
+    id: ID!
+    views: Int
+    likes: Int
+    retweets: Int
+    responses: Int
+}
+
+type Notification {
+    id: ID!
+    type: String
+}
+
+type Meta {
+    id: ID!
+    count: Int
+}
+
+
+type Query {
+    Tweet(id: ID!): Tweet
+    Tweets(limit: Int, skip: Int, sort_field: String, sort_order: String): [Tweet]
+    TweetsMeta: Meta
+    User(id: ID!): User
+    Notifications(limit: Int): [Notification]
+    NotificationsMeta: Meta
+}
+
+type Mutation {
+    Tweet(id: ID!): Tweet
+}

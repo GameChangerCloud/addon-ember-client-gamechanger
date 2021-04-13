@@ -14,7 +14,7 @@ module.exports = {
   description: '',
   fileName: '',
   entities: [],
-  entitiesName: [],
+  entityNames: [],
   configMirage: "",
   importScenarios: '',
   defaultScenario: '',
@@ -75,8 +75,8 @@ module.exports = {
     if (!this.isDirSync("./mirage/factories")) {
       fs.mkdirSync("./mirage/factories")
     }
-    for (let index = 0; index < this.entitiesName.length; index++) {
-      let entityName = this.entitiesName[index].toLowerCase()
+    for (let index = 0; index < this.entityNames.length; index++) {
+      let entityName = this.entityNames[index].toLowerCase()
       let entityNameSingular = pluralize.singular(entityName)
       fs.writeFileSync("./mirage/factories/" + entityNameSingular + ".js", this.getFactory(this.entities[index]))
     }
@@ -114,22 +114,22 @@ module.exports = {
   },
 
 
-  getImportScenario(entitiesName) {
+  getImportScenario(entityNames) {
     let s = ""
-    entitiesName.map(entityName => {
+    entityNames.map(entityName => {
       s += "import " + entityName.toLowerCase() + " from ../factories/" + entityName.toLowerCase() + "\n"
     })
     return s
   },
 
-  // getDefaultScenario(entities, entitiesName) {
+  // getDefaultScenario(entities, entityNames) {
   //   let s = ""
-  //   for (let index = 0; index < entitiesName.length; index++) {
-  //     s += "server.createList('" + entitiesName[index].toLowerCase() + "', NUMBER_ENTITY, {"
+  //   for (let index = 0; index < entityNames.length; index++) {
+  //     s += "server.createList('" + entityNames[index].toLowerCase() + "', NUMBER_ENTITY, {"
   //     let fieldCount = 0
   //     entities[index].fields.map(field => {
   //       if (field.type !== "ID" && field.type !== "String" && field.type !== "Int" && field.type !== "Boolean") {
-  //         let entityField = this.getEntityFromField(field.type, entitiesName, entities)
+  //         let entityField = this.getEntityFromField(field.type, entityNames, entities)
   //         if (field.isArray) {
   //           s += field.name + ": server.createList('" + field.type.toLowerCase() + "', NUMBER_RELATION_ENTITY, {" + this.createFieldsRelationNull(entityField) + "})"
   //           if (fieldCount < entities[index].fields.length - 1) {
@@ -166,10 +166,10 @@ module.exports = {
   },
 
 
-  getEntityFromField(fieldType, entitiesName, entities) {
+  getEntityFromField(fieldType, entityNames, entities) {
     let result
-    for (let index = 0; index < entitiesName.length; index++) {
-      if (entitiesName[index] === fieldType) {
+    for (let index = 0; index < entityNames.length; index++) {
+      if (entityNames[index] === fieldType) {
         result = entities[index]
       }
     }
@@ -187,10 +187,10 @@ module.exports = {
   },
 
 
-  // getConfigMirage(entities, entitiesName) {
+  // getConfigMirage(entities, entityNames) {
   //   let s = ""
-  //   for (let index = 0; index < entitiesName.length; index++) {
-  //     const queryName = entitiesName[index].toLowerCase()
+  //   for (let index = 0; index < entityNames.length; index++) {
+  //     const queryName = entityNames[index].toLowerCase()
   //     const queryNamePlural = pluralize.plural(queryName)
   //     const queryNameSingular = pluralize.singular(queryName)
 
@@ -274,12 +274,12 @@ module.exports = {
     for (const type in schemaJSON) {
       if (type !== "Query") {
         this.entities.push(schemaJSON[type])
-        this.entitiesName.push(type)
+        this.entityNames.push(type)
       }
     }
-    this.importScenarios += this.getImportScenario(this.entitiesName)
-    // this.configMirage += this.getConfigMirage(this.entities, this.entitiesName)
-    // this.defaultScenario += this.getDefaultScenario(this.entities, this.entitiesName)
+    this.importScenarios += this.getImportScenario(this.entityNames)
+    // this.configMirage += this.getConfigMirage(this.entities, this.entityNames)
+    // this.defaultScenario += this.getDefaultScenario(this.entities, this.entityNames)
 
     // Return custom template variables here.
     return {

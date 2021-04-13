@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
-import Constantes from '../constantes'
+import Params from '../params'
 
 export default Controller.extend({
-  api : Constantes.getApi()
+  api : Params.getApi()
 })

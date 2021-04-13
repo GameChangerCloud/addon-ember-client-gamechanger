@@ -3,14 +3,14 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
-import Constantes from '../constantes'
+import Params from '../params'
 
 
 export default Controller.extend({
   flashMessages: service(),
   session: service(),
   prefix : 'https://cors-anywhere.herokuapp.com/',
-  api_endpoint : Constantes.getApi(),
+  api_endpoint : Params.getApi(),
   tables_exist : false,
   is_load : false,
 

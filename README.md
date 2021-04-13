@@ -116,8 +116,8 @@ create<EntityName>(server, NUMBER_ENTITY, NUMBER_RELATION_ENTITY)
 ```
 import config<EntityName> from "./config-<entity-name>"
 
-else if (/query <entitiesName>/.test(body)) {
-  return { "data": { <entitiesName>: config<EntityName>(schema, null, isPlural) } }
+else if (/query <entityNames>/.test(body)) {
+  return { "data": { <entityNames>: config<EntityName>(schema, null, isPlural) } }
 }
 else if (/query <entityName>/.test(body)) {
   return { "data": { <entityName>: config<EntityName>(schema, bodyJSON, !isPlural) } }
