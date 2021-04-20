@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { get } from '@ember/object';
 
-export default class Display<%=entityName%>Route extends Route {
+export default class Display<%=entityName.singular%>Route extends Route {
   @service router;
   @service flashMessages;
 
@@ -13,7 +13,7 @@ export default class Display<%=entityName%>Route extends Route {
 
   model(params) {
     this.displayNotification('Loading ...')
-    return this.store.findAll('<%=entityName%>').then(data => {
+    return this.store.findAll('<%=entityName.singular%>').then(data => {
       this.displayNotification('Datas load !')
       return data
     }).catch(error => {

@@ -1,3 +1,3 @@
 export default function(server, number) {
-	<%=scenarioEntityMirage%>
+	server.createList('<%=entityName.lowercase%>', number)
 }

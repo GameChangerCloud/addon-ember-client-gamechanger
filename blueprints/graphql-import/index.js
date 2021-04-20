@@ -72,7 +72,10 @@ module.exports = {
 
         // Call on blueprint entity-factory
         for (let index = 0; index < this.entityNames.length; index++) {
-            shell.exec("ember g entity-factory " + this.getParsedInlineEntity(this.entities[index], this.entityNames[index]))
+            console.log("Calling ember g entity-factory " +this.entityNames[index]+ " '"+ JSON.stringify(this.entities[index].fields)+"'")
+            shell.exec("ember g entity-factory " +this.entityNames[index]+ " '"+ JSON.stringify(this.entities[index].fields)+"'")
+
+            //shell.exec("ember g entity-factory " + this.getParsedInlineEntity(this.entities[index], this.entityNames[index]))
             // shell.exec("ember g entity-factory "+this.getParsedInlineEntity(this.entities[index], this.entityNames[index]) + " " + JSON.stringify(this.entities[index]))
         }
     },
@@ -115,6 +118,7 @@ module.exports = {
                 }
             }
         })
+        //console.log("Entity "+entityName+" parsed : "+s);
         return s
     },
 
@@ -159,6 +163,8 @@ module.exports = {
 
         // Fetch all the types (except query) and types name
         for (const type in schemaJSON) {
+            //console.log("Found Entity : "+type)
+            //console.log(JSON.stringify(schemaJSON[type]))
             if (type !== "Query" && type !== "Mutation" && type !== "Subscription" && schemaJSON[type].type !== "ScalarTypeDefinition") {
                 this.entities.push(schemaJSON[type])
                 this.entityNames.push(type)
@@ -174,7 +180,7 @@ module.exports = {
             schemaGraphqlHTML: this.schemaGraphqlHTML(this.entities, this.entityNames)
         };
     },
-    
+    /*
     afterInstall(options) {
         return this.addAddonsToProject({
           packages: [
@@ -196,5 +202,5 @@ module.exports = {
           ]
         });
       }
-      
+      */
 };

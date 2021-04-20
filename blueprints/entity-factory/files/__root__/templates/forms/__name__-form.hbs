@@ -1,15 +1,35 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="title">New <%=entityName%></h1>
+  <h1 class="title">New <%=entityName.singular%></h1>
 </div>
 
 {{#validated-form
-  model = (changeset model <%=upperFirstLetter%>Validations)
+  model = (changeset model <%=entityName.lowercap%>Validations)
   on-submit =  (action 'submit' f.input)
   as |f|}}
 
+<% fields.filter(f => f.isScalar && f.type != 'ID').forEach(field => { %>  <%=field.input%>
+<% }); %>
 
-  <%=listColumnsTable%>
+<% fields.filter(f => !f.isScalar).forEach(field => { %>  {{#if this.assetIsLoad}}
+    {{f.input
+      type         = "select"
+      label        = "<%=field.name.toLowerCase()%>"
+      name         = "<%=field.name.toLowerCase()%>"
+      includeBlank = "Select a <%=field.type%>"
+      optionValuePath="id"
+      optionLabelPath=first<%=field.type.toLowerCase()%>
+      options      = all<%=field.type.toLowerCase()%>    
+<% if (field.relationType == 'has-many') {%>    multiple     = true
+<% } %>
+    }}
+  {{else}}
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <br/>
+  {{/if}}
 
+<% }); %>
 
 {{f.submit class="btn btn-success valid-form" label="Save"}}
 

@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 
-export default class Display<%=entityName%>Route extends Route {
+export default class Display<%=entityName.singular%>Route extends Route {
 
   model(params) {
     console.log(params)
@@ -9,7 +9,7 @@ export default class Display<%=entityName%>Route extends Route {
     // 	sort_order: 1,
     // 	limit: 2
     // })
-    return this.store.findRecord('<%=entityName%>', params.<%=entityName%>_id);
+    return this.store.findRecord('<%=entityName.singular%>', params.<%=entityName.singular%>_id);
   }
 
 }
