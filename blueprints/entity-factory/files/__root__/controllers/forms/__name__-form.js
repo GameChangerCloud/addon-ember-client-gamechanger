@@ -74,7 +74,7 @@ export default Controller.extend({
     this.displayNotification('Saving...')
     let rout = this.router
     let formatDate = this.formatDate;
-    let data = this.store.createRecord('<%=entityName%>',{
+    let data = this.store.createRecord('<%=entityName.lowercase%>',{
       <% fields.filter(f => f.isScalar && !f.isDate).forEach(field => { %>       <%=field.name%> : formatDate(fields["<%=field.name%>"]),
       <% } ) %>
       <% fields.filter(f => f.isScalar && f.isDate).forEach(field => { %>       <%=field.name%> : fields["<%=field.name%>"],
@@ -85,7 +85,7 @@ export default Controller.extend({
     });
     data.save().then(success => {
       this.displayNotification('Saved !')
-      rout.transitionTo('display-<%=entityName%>')
+      rout.transitionTo('display-<%=entityName.lowercase%>')
     }).catch(error => {
       this.displayNotification("ERROR  : " + error.errors[0].message)
     })

@@ -7,7 +7,7 @@ export default function (schema, bodyJSON, isPlural) {
             results<%= entityName.pluralcap %>.push({
 <% fields.forEach(field => { if (field.isScalar) {%>			"<%= field.name %>": <%= entityName.lowercase %>.<%= field.name %>,
 <% } else { if (field.relationType === 'has-many') { %>			"<%= field.name %>": schema.db.<%= field.pluralType.toLowerCase() %>.find(<%= entityName.lowercase %>.<%= field.name %>Ids),
-<% } else { %> 			"<%= field.name %>": schema.db.<%= field.pluralType.toLowerCase() %>.findById({id: <%= entityName.lowercase %>.<%= field.name %>)Id},
+<% } else { %> 			"<%= field.name %>": schema.db.<%= field.pluralType.toLowerCase() %>.findById({id: <%= entityName.lowercase %>.<%= field.name %>Id}),
 <% } } }); %>
             })
         })
@@ -20,7 +20,7 @@ export default function (schema, bodyJSON, isPlural) {
                 <%= entityName.lowercase %>: {
 	<% fields.forEach(field => { if (field.isScalar) {%>			"<%= field.name %>": <%= entityName.lowercase %>.<%= field.name %>,
 	<% } else { if (field.relationType === 'has-many') { %>			"<%= field.name %>": schema.db.<%= field.pluralType.toLowerCase() %>.find(<%= entityName.lowercase %>.<%= field.name %>Ids),
-	<% } else { %> 			"<%= field.name %>": schema.db.<%= field.pluralType.toLowerCase() %>.findById({id: <%= entityName.lowercase %>.<%= field.name %>)Id},
+	<% } else { %> 			"<%= field.name %>": schema.db.<%= field.pluralType.toLowerCase() %>.findById({id: <%= entityName.lowercase %>.<%= field.name %>Id}),
 	<% } } }); %>
                 }
             }

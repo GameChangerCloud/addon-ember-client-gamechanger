@@ -180,7 +180,7 @@ module.exports = {
             schemaGraphqlHTML: this.schemaGraphqlHTML(this.entities, this.entityNames)
         };
     },
-    /*
+    
     afterInstall(options) {
         return this.addAddonsToProject({
           packages: [
@@ -202,5 +202,5 @@ module.exports = {
           ]
         });
       }
-      */
+      
 };
