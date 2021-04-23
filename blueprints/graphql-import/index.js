@@ -182,10 +182,16 @@ module.exports = {
     },
     
     afterInstall(options) {
+        // Config file should be updated to add cognito var :    
+        //  cognito: { poolId: 'us-east-1_123456789', clientId: '6fjssv5p478sjl54i2vn1g45td'}
+        let configPath = (options.dummy) ? "tests/dummy/config/environment.js" : "config/environment.js";
+        addLineToFile(this, configPath, /let ENV = {/, "\tcognito: {\n\t\tpoolId: 'us-east-1_123456789',\n\t\tclientId: '6fjssv5p478sjl54i2vn1g45td'\n\t},");
+
         return this.addAddonsToProject({
           packages: [
-            { name: 'ember-ajax' }, // to remove for Appolo ?
-            { name: 'ember-graphql-adapter' }, // to remove for Appollo ?
+//            { name: 'ember-ajax' }, // to remove for Appolo ?
+//            { name: 'ember-graphql-adapter' }, // to remove for Appollo ?
+            { name: 'ember-apollo-client' },
             { name: 'ember-cli-mirage' },
             { name: 'ember-models-table' },
             { name: 'ember-bootstrap' },
@@ -198,9 +204,27 @@ module.exports = {
             { name: 'ember-cognito'},
             { name: 'ember-cli-deploy'},
             { name: 'ember-cli-deploy-aws-pack'},
-            { name: 'ember-faker'}
+            { name: 'ember-faker'} // todo import faker directly and not through an addon
           ]
         });
+      },
+
+      addLineToFile(ctx, filePath, markerString, addedLine) {
+        let fileContents = fs.readFileSync(filePath, 'utf-8');
+      
+        if (fileContents.indexOf(addedLine) === -1) {
+         //ctx.ui.writeLine("\tAdd line "+addedLine+" to file "+filePath);
+         fileContents = fileContents.replace(markerString, [
+           '$&',
+           addedLine,
+         ].join('\n'));
+       }
+       if (fileContents.indexOf(addedLine) === -1) {
+         ctx.ui.writeWarnLine(
+           'Unable to update '+filePath+'. You should update this file manually.');
+       } else {
+         fs.writeFileSync(filePath, fileContents, 'utf-8');
+       }
       }
       
 };

@@ -1,5 +1,5 @@
-import JSONAPISerializer from '@ember-data/serializer/json-api';
-import { Serializer } from 'ember-graphql-adapter'
+import { JSONAPISerializer } from 'ember-cli-mirage';
 
-export default class ApplicationSerializer extends Serializer {
-}
+export default JSONAPISerializer.extend({
+
+})

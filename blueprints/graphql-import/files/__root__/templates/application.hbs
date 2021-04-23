@@ -29,7 +29,7 @@
         </h6>
         <ul class="nav flex-column mb-2">
 <% entityNames.forEach(function(entity){ %>           <li class="nav-item">
-            <LinkTo @route="display-menuentry" class="nav-link"><%=entity.singular%></LinkTo>
+            <LinkTo @route="display-<%=entity.lowercase%>" class="nav-link"><%=entity.singular%></LinkTo>
           </li>
 <% }) %>         </ul>
       </div>

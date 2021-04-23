@@ -1,5 +1,6 @@
 <% entityNames.forEach(function(entity){ %>import config<%=entity.singular.charAt(0).toUpperCase()+entity.singular.slice(1).toLowerCase()%> from './config-<%=entity.singular.toLowerCase()%>'
 <% }) %>
+import ENV from '../config/environment'
 
 export default function () {
 
@@ -26,12 +27,27 @@ export default function () {
 
     https://www.ember-cli-mirage.com/docs/route-handlers/shorthands
   */
+    // By pass Cognito Authentication in Mirage setup
+    this.post('https://cognito-idp.'+ENV.cognito.poolId.substring(0,9)+'.amazonaws.com/',  async (db, request) => {
+      console.log("Try to call Cognito Authentication")
+      return {
+        ChallengeName: "PASSWORD_VERIFIER", 
+        ChallengeParameters: {
+          USER_ID_FOR_SRP: "mockuser", 
+          USERNAME: "moxkuser",
+          SECRET_BLOCK: "fakes_secret_block",
+          SRP_B: "fake_srp_p", 
+          SALT: 'pepper'
+        },
+        AuthenticationResult: {IdToken: "jwt_1234567890", AccessToken:"access_123456789", RefreshToken:"refresh_123456789"}
+      }
+    });
 
-<% entityNames.forEach(function(entity){ %> this.get('/<%=entity.plural.toLowerCase()%>');
-  this.post('/<%=entity.plural.toLowerCase()%>');
-  this.get('/<%=entity.plural.toLowerCase()%>/:id');
-  this.put('/<%=entity.plural.toLowerCase()%>/:id');
-  this.del('/<%=entity.plural.toLowerCase()%>/:id');
+<% entityNames.forEach(function(entity){ %>   this.get('/<%=entity.plural.toLowerCase()%>');
+    this.post('/<%=entity.plural.toLowerCase()%>');
+    this.get('/<%=entity.plural.toLowerCase()%>/:id');
+    this.put('/<%=entity.plural.toLowerCase()%>/:id');
+    this.del('/<%=entity.plural.toLowerCase()%>/:id');
 <% }) %>	
   this.post('/mirage', (schema, request) => {
     const body = request.requestBody.replace(/\s+/g, ' ').trim();  // Remove excess whitespace
