@@ -1,6 +1,7 @@
 'use strict';
 const inflection = require('inflection')
 const fs = require ('fs')
+const stringUtils = require('ember-cli-string-utils')
 
 module.exports = {
   description: 'my blueprints',
@@ -99,7 +100,7 @@ module.exports = {
     let separator = path2.sep
     let pathArray = path.split(separator)
 
-    let appName = inflection.dasherize(inflection.underscore(pathArray[pathArray.length - 1]))
+    let appName = stringUtils.dasherize(inflection.underscore(pathArray[pathArray.length - 1]))
 
     return appName
   },

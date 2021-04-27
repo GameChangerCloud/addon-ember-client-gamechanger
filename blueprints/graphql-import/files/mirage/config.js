@@ -47,6 +47,7 @@ export default function () {
     this.post('/<%=entity.plural.toLowerCase()%>');
     this.get('/<%=entity.plural.toLowerCase()%>/:id');
     this.put('/<%=entity.plural.toLowerCase()%>/:id');
+    this.patch('/<%=entity.plural.toLowerCase()%>/:id');
     this.del('/<%=entity.plural.toLowerCase()%>/:id');
 <% }) %>	
   this.post('/mirage', (schema, request) => {

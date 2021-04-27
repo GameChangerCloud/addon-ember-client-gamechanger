@@ -4,6 +4,8 @@ const fs = require('fs')
 const pluralize = require('pluralize')
 const shell = require('shelljs')
 const inflection = require('inflection')
+const stringUtils = require('ember-cli-string-utils')
+
 
 module.exports = {
     name: 'graphqlimporter',
@@ -74,9 +76,6 @@ module.exports = {
         for (let index = 0; index < this.entityNames.length; index++) {
             console.log("Calling ember g entity-factory " +this.entityNames[index]+ " '"+ JSON.stringify(this.entities[index].fields)+"'")
             shell.exec("ember g entity-factory " +this.entityNames[index]+ " '"+ JSON.stringify(this.entities[index].fields)+"'")
-
-            //shell.exec("ember g entity-factory " + this.getParsedInlineEntity(this.entities[index], this.entityNames[index]))
-            // shell.exec("ember g entity-factory "+this.getParsedInlineEntity(this.entities[index], this.entityNames[index]) + " " + JSON.stringify(this.entities[index]))
         }
     },
 
@@ -128,7 +127,7 @@ module.exports = {
         let separator = path2.sep
         let pathArray = path.split(separator)
 
-        let appName = inflection.dasherize(inflection.underscore(pathArray[pathArray.length - 1]))
+        let appName = stringUtils.dasherize(inflection.underscore(pathArray[pathArray.length - 1]))
 
         return appName
     },
@@ -185,7 +184,7 @@ module.exports = {
         // Config file should be updated to add cognito var :    
         //  cognito: { poolId: 'us-east-1_123456789', clientId: '6fjssv5p478sjl54i2vn1g45td'}
         let configPath = (options.dummy) ? "tests/dummy/config/environment.js" : "config/environment.js";
-        addLineToFile(this, configPath, /let ENV = {/, "\tcognito: {\n\t\tpoolId: 'us-east-1_123456789',\n\t\tclientId: '6fjssv5p478sjl54i2vn1g45td'\n\t},");
+        this.addLineToFile(this, configPath, /let ENV = {/, "\tcognito: {\n\t\tpoolId: 'us-east-1_123456789',\n\t\tclientId: '6fjssv5p478sjl54i2vn1g45td'\n\t},");
 
         return this.addAddonsToProject({
           packages: [
@@ -225,6 +224,10 @@ module.exports = {
        } else {
          fs.writeFileSync(filePath, fileContents, 'utf-8');
        }
+      },
+
+      isDevelopingAddon(){
+          return true;
       }
       
 };

@@ -16,10 +16,14 @@ module.exports = {
   },
 
   fileMapTokens(options) {
+    console.log("**** fileMapTokens options.locals.entityName.lowercase="+options.locals.entityName.lowercase)
     return {
       __name__(options) {
         return options.locals.entityName.lowercase
-      },
+      }, 
+      __dashname__(options) {
+        return options.locals.entityName.dasherize
+      }, 
       __mirage__() {
         return "./mirage"
       }
@@ -54,13 +58,17 @@ module.exports = {
   },
 
   getEntityNamesAndPlurals(ent) {
+    console.log("****** getEntityNamesAndPlurals for entity "+ent)
+     console.log("****** getEntityNamesAndPlurals dasherized entity "+stringUtils.dasherize(ent))
+
       return {
-        "singular": ent,                                                        // Asset,  Person, PageFragment
-        "plural": inflection.pluralize(ent),                                        // Assets, People, PageFraments
+        "singular": ent.toLowerCase(),                                                        // Asset,  Person, PageFragment
+        "plural": inflection.pluralize(ent.toLowerCase()),                                        // Assets, People, PageFraments
         "lowercase": ent.toLowerCase(),                                         // asset,  person, pagefragment
-        "lowerplural": inflection.pluralize(ent.toLowerCase()),
-        "lowercap": inflection.capitalize(ent.toLowerCase()),                   // Asset,  Person, Pagefragment
-        "pluralcap": inflection.capitalize(inflection.pluralize(ent).toLowerCase()) // Assets, People, Pagefragments
+        "lowerplural": inflection.pluralize(ent.toLowerCase()),             // assets,  persons, pagefragments
+        "lowercap": stringUtils.capitalize(ent.toLowerCase()),                   // Asset,  Person, Pagefragment
+        "pluralcap": stringUtils.capitalize(inflection.pluralize(ent).toLowerCase()), // Assets, People, Pagefragments
+        "dasherize": stringUtils.dasherize(ent)                                  // asset,  person, page-fragment
       }
   },
 
@@ -73,6 +81,7 @@ module.exports = {
       field['input'] = matching.inputField(field.name, field.type, field.noNull, false)
       field['inputWithModel'] = matching.inputField(field.name, field.type, field.noNull,true)
       field['isDate'] = matching.classifyType(field.name, field.type)
+      field['embertype'] = matching.matchType(field.type.toLowerCase())
       //field['validator'] = matching.findValidator(field.name, field.type)
     } else {
       // relationship

@@ -14,7 +14,7 @@ Router.map(function() {
     this.route('forms.<%= elt.singular.toLowerCase() %>-form', function() {});
 <% }); %>
     this.route('update', function() {  
-<% entityNames.forEach(elt => { %>        this.route('/<%= elt.singular.toLowerCase() %>', {path: '<%= elt.singular.toLowerCase() %>/:<%= elt.singular.toLowerCase() %>_id'});
+<% entityNames.forEach(elt => { %>        this.route('<%= elt.singular.toLowerCase() %>', {path: '/<%= elt.singular.toLowerCase() %>/:<%= elt.singular.toLowerCase() %>_id'});
 <% }); %>
     });
 });

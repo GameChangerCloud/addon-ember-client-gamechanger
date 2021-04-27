@@ -4,11 +4,6 @@ const matching = require('./utils/matching')
 const easygraphqlparser = require('easygraphql-parser')
 const fs = require('fs')
 const pluralize = require('pluralize')
-const inflection = require('inflection')
-const stringUtils = require('ember-cli-string-utils')
-
-
-
 
 module.exports = {
   description: '',

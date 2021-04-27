@@ -301,14 +301,28 @@ function matchString(s, type) {
             return 'faker.internet.email()'
 
         case scalar.URL.toLowerCase():
-            return 'faker.internet.url();'
+            return 'faker.internet.url()'
 
         // todo : complete with other scalars
     }
 }
 
+function matchType(type) {
+    switch (type) {
+        case 'string':
+        case 'boolean':
+            return type
+
+        case 'int':
+            return 'number'    
+
+        default:
+            return 'string'
+    }    
+}
 
 module.exports = {
+    matchType: matchType,
     matchString: matchString,
     inputField: inputField,
     classifyType: classifyType
